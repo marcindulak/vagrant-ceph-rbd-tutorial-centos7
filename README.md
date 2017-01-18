@@ -185,3 +185,7 @@ Problems
         ...
         Failed to execute command: /usr/sbin/ceph-disk -v prepare --cluster ceph --fs-type xfs -- /dev/sdb /dev/sdc
 
+2. If you get "VBoxManage: error: Could not find a controller named 'IDE Controller'" (see https://github.com/redhat-imaging/imagefactory/issues/393)
+   prepend `CONTROLLER=IDE` to all vagrant commands, e.g. `CONTROLLER=IDE vagrant up`
+
+
