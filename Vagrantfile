@@ -19,7 +19,7 @@ Vagrant.configure(2) do |config|
       config.vm.define hosts[host]['hostname'] do |server|
         server.vm.box = 'centos/7'
         server.vm.box_url = 'centos/7'
-        server.vm.synced_folder '.', '/home/vagrant/sync', disabled: true
+        server.vm.synced_folder '.', '/vagrant', disabled: true
         server.vm.network 'private_network', ip: hosts[host]['ip'], mac: hosts[host]['mac'], auto_config: false
         server.vm.provider 'virtualbox' do |v|
           v.memory = 512
