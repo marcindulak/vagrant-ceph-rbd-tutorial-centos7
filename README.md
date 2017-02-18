@@ -112,7 +112,7 @@ only one server (**server0** here, though all the servers in this setup are equi
 
 When an OSD server goes down Ceph will adjust the status of the cluster::
 
-            $ vagrant ssh server1 -c "sudo su - -c 'shutdown -h now'"
+            $ ! vagrant ssh server1 -c "sudo su - -c 'shutdown -h now'"
             $ sleep 30
             $ vagrant ssh server2 -c "sudo su - ceph -c 'ceph status'"
             $ vagrant up server1
@@ -137,6 +137,10 @@ See http://docs.ceph.com/docs/master/start/quick-rbd/ for more information about
 
             $ vagrant ssh client0 -c "sudo su - ceph -c 'sudo chmod +r /etc/ceph/ceph.client.admin.keyring'"
             $ vagrant ssh client0 -c "sudo su - ceph -c 'rbd create rbd0 --size 128 -m server0,server1,server2 -k /etc/ceph/ceph.client.admin.keyring'"
+
+- disable unsupported features (https://bugs.launchpad.net/ubuntu/+source/ceph/+bug/1578484)::
+
+            $ vagrant ssh client0 -c "sudo su - ceph -c 'rbd feature disable rbd0 exclusive-lock object-map fast-diff deep-flatten'"
 
 - map the image to the block device::
 
