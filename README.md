@@ -2,7 +2,7 @@
 Description
 -----------
 
-Configures Ceph "Luminous" cluster consisting of 3 CentOS 7 nodes and presents a Rados Block Device (RBD)
+Configures Ceph "kraken" cluster consisting of 3 CentOS 7 nodes and presents a Rados Block Device (RBD)
 to a CentOS 7 client.
 
 Tested on Ubuntu 14.04 host.
@@ -127,7 +127,7 @@ See http://docs.ceph.com/docs/master/start/quick-rbd/ for more information about
 
 - from an ADMIN node install Ceph on the client::
 
-            $ vagrant ssh server0 -c "sudo su - ceph -c 'ceph-deploy install --release luminous client0'"
+            $ vagrant ssh server0 -c "sudo su - ceph -c 'ceph-deploy install --release kraken client0'"
 
 - copy `/etc/ceph/ceph.conf` and keys to the client::
 

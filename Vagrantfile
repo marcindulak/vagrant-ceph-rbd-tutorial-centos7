@@ -1,7 +1,21 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-RELEASE = 'luminous'
+# luminous crashes with
+#command_check_call: Running command: /usr/bin/ceph-osd --cluster ceph --mkfs -i 0 --monmap /var/lib/ceph/tmp/mnt.Gj0oa1/activate.monmap --osd-data /var/lib/ceph/tmp/mnt.Gj0oa1 --osd-uuid 0862143f-e3e6-43d0-8984-4aed5c9e493d --setuser ceph --setgroup ceph
+#/home/jenkins-build/build/workspace/ceph-build/ARCH/x86_64/AVAILABLE_ARCH/x86_64/AVAILABLE_DIST/centos7/DIST/centos7/MACHINE_SIZE/huge/release/12.1.4/rpm/el7/BUILD/ceph-12.1.4/src/os/bluestore/BlueFS.cc: In function 'void BlueFS::add_block_extent(unsigned int, uint64_t, uint64_t)' thread 7ff972833d00 time 2017-08-28 08:37:02.172030
+#/home/jenkins-build/build/workspace/ceph-build/ARCH/x86_64/AVAILABLE_ARCH/x86_64/AVAILABLE_DIST/centos7/DIST/centos7/MACHINE_SIZE/huge/release/12.1.4/rpm/el7/BUILD/ceph-12.1.4/src/os/bluestore/BlueFS.cc: 172: FAILED assert(bdev[id]->get_size() >= offset + length)
+# ceph version 12.1.4 (a5f84b37668fc8e03165aaf5cbb380c78e4deba4) luminous (rc)
+# 1: (ceph::__ceph_assert_fail(char const*, char const*, int, char const*)+0x110) [0x7ff9732ae420]
+# 2: (BlueFS::add_block_extent(unsigned int, unsigned long, unsigned long)+0x4d8) [0x7ff973233e68]
+# 3: (BlueStore::_open_db(bool)+0xc4f) [0x7ff973158c9f]
+# 4: (BlueStore::mkfs()+0xd0d) [0x7ff973162a5d]
+# 5: (OSD::mkfs(CephContext*, ObjectStore*, std::string const&, uuid_d, int)+0x29b) [0x7ff972d1acab]
+# 6: (main()+0xf42) [0x7ff972c5a6c2]
+# 7: (__libc_start_main()+0xf5) [0x7ff96ee93b35]
+# 8: (()+0x4ac8a6) [0x7ff972cfa8a6]
+
+RELEASE = 'kraken'
 USER = 'ceph'
 
 hosts = {
