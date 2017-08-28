@@ -15,7 +15,7 @@
 # 7: (__libc_start_main()+0xf5) [0x7ff96ee93b35]
 # 8: (()+0x4ac8a6) [0x7ff972cfa8a6]
 
-RELEASE = 'kraken'
+RELEASE = ENV.fetch('RELEASE', 'kraken')
 USER = 'ceph'
 
 hosts = {

@@ -41,7 +41,7 @@ Start three servers and install Ceph packages with::
 
         $ git clone https://github.com/marcindulak/vagrant-ceph-rbd-tutorial-centos7.git
         $ cd vagrant-ceph-rbd-tutorial-centos7
-        $ vagrant up
+        $ RELEASE=kraken vagrant up
 
 The above setup follows loosely the instructions from http://docs.ceph.com/docs/master/rados/deployment/
 
