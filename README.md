@@ -67,6 +67,10 @@ only one server (**server0** here, though all the servers in this setup are equi
   and cluster networks should be different, the cluster network being a "high" performance one.
   See http://docs.ceph.com/docs/master/rados/configuration/network-config-ref/
 
+- turn on bluestore debugging (http://lists.ceph.com/pipermail/ceph-users-ceph.com/2017-August/020441.html)::
+
+            $ vagrant ssh server0 -c "sudo su - ceph -c \"sed -i '/\[global\]/adebug bluestore = 20' ceph.conf\""
+
 - add monitors (MONs)::
 
             $ vagrant ssh server0 -c "sudo su - ceph -c 'ceph-deploy mon create server{0,1,2}'"
@@ -79,6 +83,12 @@ only one server (**server0** here, though all the servers in this setup are equi
 - synchronize `/etc/ceph/ceph.conf` and keys on all the admin (ADMIN) servers::
 
             $ vagrant ssh server0 -c "sudo su - ceph -c 'ceph-deploy admin server{0,1,2}'"
+
+- deploy a manager daemon. (Required only for luminous+ builds), **Warning** this step currently fails on luminous::
+
+            $ vagrant ssh server0 -c "sudo su - ceph -c 'ceph-deploy mgr create server0'"
+
+  ceph-deploy: error: argument COMMAND: invalid choice: 'mgr' MDTMP
 
 - list the available disks::
 
@@ -101,6 +111,10 @@ only one server (**server0** here, though all the servers in this setup are equi
             $ vagrant ssh server0 -c "sudo su - ceph -c 'sudo chmod +r /etc/ceph/ceph.client.admin.keyring'"
             $ vagrant ssh server1 -c "sudo su - ceph -c 'sudo chmod +r /etc/ceph/ceph.client.admin.keyring'"
             $ vagrant ssh server2 -c "sudo su - ceph -c 'sudo chmod +r /etc/ceph/ceph.client.admin.keyring'"
+
+- list disk layout:
+
+            $ vagrant ssh server0 -c "sudo su - -c 'ceph-disk list'"
 
 - check some aspects of the cluster status from all the admin servers::
 
@@ -132,6 +146,17 @@ See http://docs.ceph.com/docs/master/start/quick-rbd/ for more information about
 - copy `/etc/ceph/ceph.conf` and keys to the client::
 
             $ vagrant ssh server0 -c "sudo su - ceph -c 'ceph-deploy admin client0'"
+
+- use the ceph tool to create a pool (we recommend the name ‘rbd’), needed starting from luminous, **Warning** this step currently fails on luminous::
+
+            $ vagrant ssh server0 -c "sudo su - ceph -c 'ceph osd pool create rbd'"
+
+  osd pool create <poolname> <int[0-]> {<int[0-]>} {replicated|erasure} {<erasure_code_profile>} {<rule>} {<int>} :  create pool
+  Error EINVAL: invalid command MDTMP
+
+- use the rbd tool to initialize the pool for use by RBD::
+
+            $ vagrant ssh server0 -c "sudo su - ceph -c 'rbd pool init rbd'"
 
 - create a 128MB block device image rbd0::
 
