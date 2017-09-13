@@ -193,9 +193,9 @@ SCRIPT
         # install Ceph packages on all servers
         server.vm.provision :shell, :inline => 'ceph-deploy install --release ' + RELEASE + ' ' + hosts[host]['hostname']
         # install and enable ntp
-        server.vm.provision :shell, :inline => 'yum -y install ntp'
-        server.vm.provision :shell, :inline => 'systemctl enable ntpd'
-        server.vm.provision :shell, :inline => 'systemctl start ntpd'
+        server.vm.provision :shell, :inline => 'yum -y install chrony'
+        server.vm.provision :shell, :inline => 'systemctl enable chronyd.service'
+        server.vm.provision :shell, :inline => 'systemctl start chronyd.service'
       end
     end
   end
@@ -242,9 +242,9 @@ SCRIPT
         client.vm.provision :shell, :inline => 'systemctl restart network'
         client.vm.provision :shell, :inline => $linux_disable_ipv6, run: 'always'
         # install and enable ntp
-        client.vm.provision :shell, :inline => 'yum -y install ntp'
-        client.vm.provision :shell, :inline => 'systemctl enable ntpd'
-        client.vm.provision :shell, :inline => 'systemctl start ntpd'
+        client.vm.provision :shell, :inline => 'yum -y install chrony'
+        client.vm.provision :shell, :inline => 'systemctl enable chronyd.service'
+        client.vm.provision :shell, :inline => 'systemctl start chronyd.service'
       end
     end
   end
